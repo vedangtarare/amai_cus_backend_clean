@@ -54,26 +54,28 @@ if query:
 
             analysis_prompt = f"""Analyze the following legal case excerpt in the context of the question: \"{query}\"
 
+{quoted}"""Analyze the following legal case excerpt in the context of the question: \"{query}\"
+
 {quoted}"""
             Analyze the following legal case excerpt in the context of the question: "{query}"
             
 
             {quoted}"""
-            significance_prompt = f'"'Explain the significance of this case in relation to the query: \"{query}\". Begin and end with a complete sentence.
+            significance_prompt = f"""Explain the significance of this case in relation to the query: \"{query}\". Begin and end with a complete sentence.
 
 {quoted}"""{query}". Begin and end with a complete sentence.
 
 {quoted}"
-            case_name_prompt = f'"'What is the name of the Indian case this excerpt likely belongs to? Provide only the name and citation if possible.
+            case_name_prompt = f"""What is the name of the Indian case this excerpt likely belongs to? Provide only the name and citation if possible.
 
 {quoted}"""
-            facts_prompt = f'"'State the facts of this case in 2–3 lines. Begin and end with a complete sentence.
+            facts_prompt = f"""State the facts of this case in 2–3 lines. Begin and end with a complete sentence.
 
 {quoted}"""
-            holding_prompt = f'"'State the judgment held in 1–2 lines. What did the court decide? Ensure it starts and ends cleanly.
+            holding_prompt = f"""State the judgment held in 1–2 lines. What did the court decide? Ensure it starts and ends cleanly.
 
 {quoted}"""
-            also_lookup_prompt = f'"'List any legislation, rules, sections, or by-laws that the user should additionally refer to in order to better understand their query: \"{query}\"
+            also_lookup_prompt = f"""List any legislation, rules, sections, or by-laws that the user should additionally refer to in order to better understand their query: \"{query}\"
 
 {quoted}"""{query}"
 
