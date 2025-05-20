@@ -137,5 +137,5 @@ if submit_button and query and openai_api_key:
 
         final_answer = OpenAI(openai_api_key=openai_api_key).invoke(synthesis_prompt)
         st.write("📤 Model responded:")
-        st.write(final_answer)
+        st.markdown(f"<div style=\"color:white\">{final_answer}</div>", unsafe_allow_html=True)
         import logging
