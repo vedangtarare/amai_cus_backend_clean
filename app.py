@@ -136,6 +136,12 @@ if submit_button and query and openai_api_key:
             synthesis_prompt = f"""The user asked: \"{query}\"\n\nUsing the information from the following 3-5 different legal case excerpts, provide a comprehensive, synthesized legal answer.\n\n{combined_context}\n\nMention the most relevant doctrines and principles and explain how each case contributes to the answer. End with a proper concluding sentence."""
 
             final_answer = OpenAI(openai_api_key=openai_api_key).invoke(synthesis_prompt)
+st.write("📤 Model responded:")
+st.write(final_answer)
+import logging
+logging.warning(f"LLM response: {final_answer}")
+if not final_answer:
+    final_answer = "⚠️ No response was generated. Please try again."
             st.success(final_answer)
 
         def generate_pdf(text):
