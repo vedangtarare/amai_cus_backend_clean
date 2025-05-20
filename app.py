@@ -41,7 +41,7 @@ query = st.text_input("🔎 Enter your legal research question here:")
 if query:
     docs_and_scores = store.similarity_search_with_score(query, k=top_k)
     context_blocks = []
-    final_answer = "'
+    final_answer = ""
 
     if view_mode == "🔍 Case-by-Case Insight":
         st.info("💡 Follow-up questions, download options, and detailed case matches are below.")
