@@ -135,38 +135,7 @@ if submit_button and query and openai_api_key:
             combined_context = "\n\n".join([f"\"{chunk}\"" for chunk in context_blocks])
             synthesis_prompt = f"""The user asked: \"{query}\"\n\nUsing the information from the following 3-5 different legal case excerpts, provide a comprehensive, synthesized legal answer.\n\n{combined_context}\n\nMention the most relevant doctrines and principles and explain how each case contributes to the answer. End with a proper concluding sentence."""
 
-            final_answer = OpenAI(openai_api_key=openai_api_key).invoke(synthesis_prompt)
-st.write("📤 Model responded:")
-st.write(final_answer)
-import logging
-logging.warning(f"LLM response: {final_answer}")
-if not final_answer:
-    final_answer = "⚠️ No response was generated. Please try again."
-            st.success(final_answer)
-
-        def generate_pdf(text):
-            pdf = FPDF()
-            pdf.add_page()
-            pdf.set_font("Arial", size=12)
-            for line in text.split('\n'):
-                pdf.multi_cell(0, 10, line)
-            return pdf.output(dest='S').encode('latin-1')
-
-        def generate_docx(text):
-            doc = Document()
-            for line in text.split('\n'):
-                doc.add_paragraph(line)
-            buffer = BytesIO()
-            doc.save(buffer)
-            buffer.seek(0)
-            return buffer
-
-        st.download_button("📥 Download Final Answer (.pdf)", data=generate_pdf(final_answer),
-                           file_name="legal_answer.pdf", mime="application/pdf")
-
-        st.download_button("📥 Download Final Answer (.docx)", data=generate_docx(final_answer),
-                           file_name="legal_answer.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-
-        followup = st.text_input("🤔 Ask a follow-up question")
-        if followup:
-            followup_prompt = f"""The user previously asked: \"{query}\"\n\nThe assistant responded:\n{final_answer}\n\nNow respond to the follow-up: \"{followup}\"""".strip()
+        final_answer = OpenAI(openai_api_key=openai_api_key).invoke(synthesis_prompt)
+        st.write("📤 Model responded:")
+        st.write(final_answer)
+        import logging
