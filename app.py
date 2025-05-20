@@ -94,11 +94,7 @@ if submit_button and query and openai_api_key:
         context_blocks = []
         case_based_answers = []
 
-        final_answer = ""
-
-if view_mode == "🔍 Case-by-Case Insight":
-    st.info("💡 Final summary, follow-up questions, and download options are available in 'Final Summary Only' mode.")
-    st.markdown("<h3>📂 Relevant Case Matches</h3>", unsafe_allow_html=True)
+        if view_mode == "🔍 Case-by-Case Insight":
             st.markdown("<h3>📂 Relevant Case Matches</h3>", unsafe_allow_html=True)
             for i, (doc, score) in enumerate(docs_and_scores):
                 case_text = doc.page_content.strip()[:2500]
@@ -159,12 +155,11 @@ if view_mode == "🔍 Case-by-Case Insight":
             return buffer
 
         st.download_button("📥 Download Final Answer (.pdf)", data=generate_pdf(final_answer),
-                           file_name="legal_answer.pdf", mime="application/pdf")
+                        file_name="legal_answer.pdf", mime="application/pdf")
 
         st.download_button("📥 Download Final Answer (.docx)", data=generate_docx(final_answer),
-                           file_name="legal_answer.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                        file_name="legal_answer.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
         followup = st.text_input("🤔 Ask a follow-up question")
         if followup:
             followup_prompt = f"""The user previously asked: \"{query}\"\n\nThe assistant responded:\n{final_answer}\n\nNow respond to the follow-up: \"{followup}\"""".strip()
-
