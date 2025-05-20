@@ -78,10 +78,10 @@ if submit_button and query and openai_api_key:
     if not os.path.exists("batch_1_index"):
         st.info("📥 Downloading vectorstore from Google Drive...")
         gdown.download_folder(id="1EWuxugYvijzp3qlc5APz5rxLifdkxuRD", quiet=False, use_cookies=False)
-
+    
     vectorstore = FAISS.load_local("batch_1_index", embedding_model, allow_dangerous_deserialization=True)
     raw_docs_and_scores = vectorstore.similarity_search_with_score(query, k=15)
-
+    
     seen = set()
     docs_and_scores = []
     for doc, score in raw_docs_and_scores:
@@ -90,12 +90,12 @@ if submit_button and query and openai_api_key:
         docs_and_scores.append((doc, score))
         if len(docs_and_scores) == 5:
         break
-
+    
     context_blocks = []
     case_based_answers = []
-
+    
     final_answer = ""
-
+    
 if view_mode == "🔍 Case-by-Case Insight":
     st.info("💡 Final summary, follow-up questions, and download options are available in 'Final Summary Only' mode.")
         st.markdown("<h3>📂 Relevant Case Matches</h3>", unsafe_allow_html=True)
