@@ -4,3 +4,4 @@ openai
 langchain-community
 fpdf
 python-docx
+faiss-cpu
