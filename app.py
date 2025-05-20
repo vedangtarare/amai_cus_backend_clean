@@ -52,7 +52,24 @@ if query:
             context_blocks.append(case_text)
             quoted = f'"{case_text}"'
 
-            analysis_prompt = f"""Analyze the following legal case excerpt in the context of the question: \"{query}\"
+analysis_prompt = f"""Analyze the following legal case excerpt in the context of the question: \"{query}\"
+
+{quoted}"""
+significance_prompt = f"""Explain the significance of this case in relation to the query: \"{query}\". Begin and end with a complete sentence.
+
+{quoted}"""
+case_name_prompt = f"""What is the name of the Indian case this excerpt likely belongs to? Provide only the name and citation if possible.
+
+{quoted}"""
+facts_prompt = f"""State the facts of this case in 2–3 lines. Begin and end with a complete sentence.
+
+{quoted}"""
+holding_prompt = f"""State the judgment held in 1–2 lines. What did the court decide? Ensure it starts and ends cleanly.
+
+{quoted}"""
+also_lookup_prompt = f"""List any legislation, rules, sections, or by-laws that the user should additionally refer to in order to better understand their query: \"{query}\"
+
+{quoted}"""
 
 {quoted}"""Analyze the following legal case excerpt in the context of the question: \"{query}\"
 
@@ -61,33 +78,22 @@ if query:
             
 
             {quoted}"""
-            significance_prompt = f"""Explain the significance of this case in relation to the query: \"{query}\". Begin and end with a complete sentence.
 
 {quoted}"""{query}". Begin and end with a complete sentence.
 
 {quoted}"
-            case_name_prompt = f"""What is the name of the Indian case this excerpt likely belongs to? Provide only the name and citation if possible.
 
 {quoted}"""
-            facts_prompt = f"""State the facts of this case in 2–3 lines. Begin and end with a complete sentence.
 
 {quoted}"""
-            holding_prompt = f"""State the judgment held in 1–2 lines. What did the court decide? Ensure it starts and ends cleanly.
 
 {quoted}"""
-            also_lookup_prompt = f"""List any legislation, rules, sections, or by-laws that the user should additionally refer to in order to better understand their query: \"{query}\"
 
 {quoted}"""{query}"
 
 {quoted}"
 
             model = OpenAI(openai_api_key=st.secrets["OPENAI_API_KEY"])
-            analysis = model.invoke(analysis_prompt).strip()
-            significance = model.invoke(significance_prompt).strip()
-            case_name = model.invoke(case_name_prompt).strip()
-            facts = model.invoke(facts_prompt).strip()
-            holding = model.invoke(holding_prompt).strip()
-            also_lookup = model.invoke(also_lookup_prompt).strip()
 
             st.markdown(f"<h4>📝 Match {i+1} Summary</h4>", unsafe_allow_html=True)
             st.write("📌 Case Name:", case_name)
