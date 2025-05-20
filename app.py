@@ -109,12 +109,12 @@ if submit_button and query and openai_api_key:
                 holding_prompt = f"State the judgment held in 1-2 lines. What did the court decide? Ensure it starts and ends cleanly.\n\n{quoted}"
                 also_lookup_prompt = f"List any legislation, rules, sections, or by-laws that the user should additionally refer to in order to better understand their query: \"{query}\"\n\n{quoted}"
 
-                also_lookup = OpenAI(openai_api_key=openai_api_key)(also_lookup_prompt)
-                case_answer = OpenAI(openai_api_key=openai_api_key)(analysis_prompt)
-                significance = OpenAI(openai_api_key=openai_api_key)(significance_prompt)
-                case_name = OpenAI(openai_api_key=openai_api_key)(case_name_prompt)
-                facts = OpenAI(openai_api_key=openai_api_key)(facts_prompt)
-                holding = OpenAI(openai_api_key=openai_api_key)(holding_prompt)
+                also_lookup = OpenAI(openai_api_key=openai_api_key).invoke(also_lookup_prompt)
+                case_answer = OpenAI(openai_api_key=openai_api_key).invoke(analysis_prompt)
+                significance = OpenAI(openai_api_key=openai_api_key).invoke(significance_prompt)
+                case_name = OpenAI(openai_api_key=openai_api_key).invoke(case_name_prompt)
+                facts = OpenAI(openai_api_key=openai_api_key).invoke(facts_prompt)
+                holding = OpenAI(openai_api_key=openai_api_key).invoke(holding_prompt)
 
                 st.markdown(f"""
                     <div class=\"chunk-box\">
@@ -135,7 +135,7 @@ if submit_button and query and openai_api_key:
             combined_context = "\n\n".join([f"\"{chunk}\"" for chunk in context_blocks])
             synthesis_prompt = f"""The user asked: \"{query}\"\n\nUsing the information from the following 3-5 different legal case excerpts, provide a comprehensive, synthesized legal answer.\n\n{combined_context}\n\nMention the most relevant doctrines and principles and explain how each case contributes to the answer. End with a proper concluding sentence."""
 
-            final_answer = OpenAI(openai_api_key=openai_api_key)(synthesis_prompt)
+            final_answer = OpenAI(openai_api_key=openai_api_key).invoke(synthesis_prompt)
             st.success(final_answer)
 
         def generate_pdf(text):
