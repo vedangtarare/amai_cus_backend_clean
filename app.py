@@ -41,7 +41,7 @@ query = st.text_input("🔎 Enter your legal research question here:")
 if query:
     docs_and_scores = store.similarity_search_with_score(query, k=top_k)
     context_blocks = []
-    final_answer = ""
+    final_answer = "'
 
     if view_mode == "🔍 Case-by-Case Insight":
         st.info("💡 Follow-up questions, download options, and detailed case matches are below.")
@@ -50,32 +50,32 @@ if query:
         for i, (doc, score) in enumerate(docs_and_scores):
             case_text = doc.page_content.strip()[:2500]
             context_blocks.append(case_text)
-            quoted = f""{case_text}""
+            quoted = f'"{case_text}"'
 
-            analysis_prompt = f"""Analyze the following legal case excerpt in the context of the question: \"{query}\"
+            analysis_prompt = f'"'Analyze the following legal case excerpt in the context of the question: \"{query}\"
 
-{quoted}"""
+{quoted}"'"
             Analyze the following legal case excerpt in the context of the question: "{query}"
             
 
-            {quoted}"""
-            significance_prompt = f"""Explain the significance of this case in relation to the query: \"{query}\". Begin and end with a complete sentence.
+            {quoted}"'"
+            significance_prompt = f'"'Explain the significance of this case in relation to the query: \"{query}\". Begin and end with a complete sentence.
 
-{quoted}"""{query}". Begin and end with a complete sentence.
+{quoted}"'"{query}". Begin and end with a complete sentence.
 
 {quoted}"
-            case_name_prompt = f"""What is the name of the Indian case this excerpt likely belongs to? Provide only the name and citation if possible.
+            case_name_prompt = f'"'What is the name of the Indian case this excerpt likely belongs to? Provide only the name and citation if possible.
 
-{quoted}"""
-            facts_prompt = f"""State the facts of this case in 2–3 lines. Begin and end with a complete sentence.
+{quoted}"'"
+            facts_prompt = f'"'State the facts of this case in 2–3 lines. Begin and end with a complete sentence.
 
-{quoted}"""
-            holding_prompt = f"""State the judgment held in 1–2 lines. What did the court decide? Ensure it starts and ends cleanly.
+{quoted}"'"
+            holding_prompt = f'"'State the judgment held in 1–2 lines. What did the court decide? Ensure it starts and ends cleanly.
 
-{quoted}"""
-            also_lookup_prompt = f"""List any legislation, rules, sections, or by-laws that the user should additionally refer to in order to better understand their query: \"{query}\"
+{quoted}"'"
+            also_lookup_prompt = f'"'List any legislation, rules, sections, or by-laws that the user should additionally refer to in order to better understand their query: \"{query}\"
 
-{quoted}"""{query}"
+{quoted}"'"{query}"
 
 {quoted}"
 
@@ -96,12 +96,12 @@ if query:
             st.write("📚 Related Laws:", also_lookup)
 
     elif view_mode == "🧠 Final Summary Answer":
-        combined_context = "\n\n".join([f""{chunk}"" for chunk, _ in docs_and_scores])
-        synthesis_prompt = f"""The user asked: "{query}"
+        combined_context = "\n\n".join([f'"{chunk}"' for chunk, _ in docs_and_scores])
+        synthesis_prompt = f'"'The user asked: "{query}"
 
 Using the following excerpts from legal cases, provide a final detailed answer. End with a full stop.
 
-{combined_context}"""
+{combined_context}"'"
         model = OpenAI(openai_api_key=st.secrets["OPENAI_API_KEY"])
         final_answer = model.invoke(synthesis_prompt).strip()
 
