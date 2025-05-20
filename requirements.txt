@@ -1,7 +1,8 @@
 streamlit
 gdown
-openai
+langchain
 langchain-community
+langchain-openai
 fpdf
 python-docx
 faiss-cpu

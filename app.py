@@ -5,8 +5,8 @@ from fpdf import FPDF
 from docx import Document
 from io import BytesIO
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import OpenAIEmbeddings
-from langchain_community.llms import OpenAI
+from langchain_openai import OpenAIEmbeddings
+from langchain_openai import OpenAI
 from langchain.chains import RetrievalQA
 
 # --- PAGE CONFIG ---
@@ -73,6 +73,7 @@ with st.form(key='legal_query_form'):
     submit_button = st.form_submit_button(label='🔎 Submit')
 
 if submit_button and query and openai_api_key:
+    final_answer = ""  # Ensure variable is initialized
     with st.spinner("Thinking..."):
         embedding_model = OpenAIEmbeddings(openai_api_key=openai_api_key)
         if not os.path.exists("batch_1_index"):
@@ -155,10 +156,10 @@ if submit_button and query and openai_api_key:
             return buffer
 
         st.download_button("📥 Download Final Answer (.pdf)", data=generate_pdf(final_answer),
-                        file_name="legal_answer.pdf", mime="application/pdf")
+                           file_name="legal_answer.pdf", mime="application/pdf")
 
         st.download_button("📥 Download Final Answer (.docx)", data=generate_docx(final_answer),
-                        file_name="legal_answer.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                           file_name="legal_answer.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
         followup = st.text_input("🤔 Ask a follow-up question")
         if followup:
