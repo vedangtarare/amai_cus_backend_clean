@@ -94,7 +94,10 @@ if submit_button and query and openai_api_key:
         context_blocks = []
         case_based_answers = []
 
-        if view_mode == "🔍 Case-by-Case Insight":
+        final_answer = ""
+
+if view_mode == "🔍 Case-by-Case Insight":
+    st.info("💡 Final summary, follow-up questions, and download options are available in 'Final Summary Only' mode.")
             st.markdown("<h3>📂 Relevant Case Matches</h3>", unsafe_allow_html=True)
             for i, (doc, score) in enumerate(docs_and_scores):
                 case_text = doc.page_content.strip()[:2500]
