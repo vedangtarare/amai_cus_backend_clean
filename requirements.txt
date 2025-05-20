@@ -1,6 +1,6 @@
 streamlit
 gdown
 openai
-langchain
+langchain-community
 fpdf
 python-docx
