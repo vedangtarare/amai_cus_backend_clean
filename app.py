@@ -54,7 +54,7 @@ if query:
 
             analysis_prompt = f"""Analyze the following legal case excerpt in the context of the question: \"{query}\"
 
-{quoted}""""
+{quoted}"""
             Analyze the following legal case excerpt in the context of the question: "{query}"
             
 
