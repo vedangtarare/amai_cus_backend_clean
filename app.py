@@ -102,9 +102,9 @@ if submit_button and query and openai_api_key:
                 context_blocks.append(case_text)
                 quoted = f"\"{case_text}\""
 
-                analysis_prompt = f"Analyze the following legal case excerpt in the context of the question: \"{query}\"\n\n{quoted}\n\nMention key legal doctrines and provide a detailed explanation. End with a complete sentence."
-                significance_prompt = f"Explain the significance of this case in relation to the query: \"{query}\". Begin and end with a complete sentence.\n\n{quoted}"
-                case_name_prompt = f"What is the name of the Indian case this excerpt likely belongs to? Provide only the name and citation if possible.\n\n{quoted}"
+                analysis_prompt = f"Analyze only this specific legal case excerpt in the context of the user's question. Do not mix it with other cases. Your answer must start and end with a complete sentence. If the length cuts off the sentence, extend it to finish the sentence properly: \"{query}\"\n\n{quoted}\n\nMention key legal doctrines and provide a detailed explanation. End with a complete sentence."
+                significance_prompt = f"Explain the significance of only this specific case in relation to the user's query. Do not reference unrelated cases. Start and end cleanly with a full stop: \"{query}\". Begin and end with a complete sentence.\n\n{quoted}"
+                case_name_prompt = f"Give only the name and citation of this specific Indian case. Do not guess or add other cases: Provide only the name and citation if possible.\n\n{quoted}"
                 facts_prompt = f"State the facts of this case in 2-3 lines. Begin and end with a complete sentence.\n\n{quoted}"
                 holding_prompt = f"State the judgment held in 1-2 lines. What did the court decide? Ensure it starts and ends cleanly.\n\n{quoted}"
                 also_lookup_prompt = f"List any legislation, rules, sections, or by-laws that the user should additionally refer to in order to better understand their query: \"{query}\"\n\n{quoted}"
@@ -128,7 +128,7 @@ if submit_button and query and openai_api_key:
                     </div>
                 """, unsafe_allow_html=True)
 
-                case_based_answers.append(f"Match #{i+1}: {case_name}\nFacts: {facts}\nHolding: {holding}\nSignificance: {significance}\nAnalysis: {case_answer}\n")
+                case_based_answers.append(f"Match #{i+1}: {case_name}\nFacts: {facts}. Begin and end with full sentences.\nHolding: {holding}. Ensure it concludes cleanly.\nSignificance: {significance}. Always begin and end with a complete sentence. If truncated, complete the sentence before ending.\nAnalysis: {case_answer}. The answer must end with a full stop.\n")
 
         if view_mode == "🧠 Final Summary Only":
             st.markdown("<h3>🧩 Final Consolidated Answer</h3>", unsafe_allow_html=True)
