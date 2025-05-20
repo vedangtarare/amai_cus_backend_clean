@@ -1,3 +1,6 @@
+# app_debug_logging.py — Fresh version with LLM logging and display
+# Debug logging added to track LLM execution
+
 import streamlit as st
 import os
 import gdown
