@@ -52,7 +52,7 @@ if query:
             context_blocks.append(case_text)
             quoted = f""{case_text}""
 
-            analysis_prompt = f"Analyze the following legal case excerpt in the context of the question: "{query}"
+            analysis_prompt = f"""Analyze the following legal case excerpt in the context of the question: \"{query}\""""
 
 {quoted}"
             significance_prompt = f"Explain the significance of this case in relation to the query: "{query}". Begin and end with a complete sentence.
